@@ -1,0 +1,17 @@
+{
+    "name": "woocommerce/woocommerce-git-hooks",
+    "description": "WooCommerce Git Hooks",
+    "type": "scripts",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Claudio Sanches",
+            "email": "claudio@automattic.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "WooCommerce\\GitHooks\\": "src/"
+        }
+    }
+}
