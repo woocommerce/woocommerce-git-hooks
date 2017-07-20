@@ -2,6 +2,7 @@
 
 PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
+IGNORE="tests/cli/,apigen/,includes/gateways/simplify-commerce/includes/,includes/libraries/,includes/api/legacy/"
 
 # Determine if a file list is passed
 if [ "$#" -eq 1 ]
@@ -29,12 +30,12 @@ done
 if [ "$FILES" != "" ]
 then
     echo "Running Code Sniffer."
-    ./vendor/bin/phpcs --standard=./dev.ruleset.xml --encoding=utf-8 -n -p $FILES
+    ./vendor/bin/phpcs --ignore=$IGNORE --standard=./dev.ruleset.xml --encoding=utf-8 -n -p $FILES
     if [ $? != 0 ]
     then
         echo "Fix the error before commit!"
         echo "Run"
-        echo "  ./vendor/bin/phpcbf --standard=./dev.ruleset.xml $FILES"
+        echo "  ./vendor/bin/phpcbf --ignore=$IGNORE --standard=./dev.ruleset.xml $FILES"
         echo "for automatic fix or fix it manually."
         exit 1
     fi
