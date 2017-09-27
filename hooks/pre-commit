@@ -30,12 +30,12 @@ done
 if [ "$FILES" != "" ]
 then
     echo "Running Code Sniffer."
-    ./vendor/bin/phpcs --ignore=$IGNORE --standard=./dev.ruleset.xml --encoding=utf-8 -n -p $FILES
+    ./vendor/bin/phpcs --ignore=$IGNORE --standard=./phpcs.ruleset.xml --encoding=utf-8 -n -p $FILES
     if [ $? != 0 ]
     then
         echo "Fix the error before commit!"
         echo "Run"
-        echo "  ./vendor/bin/phpcbf --ignore=$IGNORE --standard=./dev.ruleset.xml $FILES"
+        echo "  ./vendor/bin/phpcbf --ignore=$IGNORE --standard=./phpcs.ruleset.xml $FILES"
         echo "for automatic fix or fix it manually."
         exit 1
     fi
