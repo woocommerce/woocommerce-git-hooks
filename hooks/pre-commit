@@ -2,43 +2,44 @@
 
 PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
-IGNORE="tests/cli/,apigen/,includes/gateways/simplify-commerce/includes/,includes/libraries/,includes/api/legacy/"
 
-# Determine if a file list is passed
-if [ "$#" -eq 1 ]
-then
-    oIFS=$IFS
-    IFS='
-    '
-    SFILES="$1"
-    IFS=$oIFS
+if [ ! -f ./phpcs.ruleset.xml ]; then
+  echo "./phpcs.ruleset.xml not found!"
+  exit 1;
+fi
+
+# Determine if a file list is passed.
+if [ "$#" -eq 1 ]; then
+  oIFS=$IFS
+  IFS='
+  '
+  SFILES="$1"
+  IFS=$oIFS
 fi
 SFILES=${SFILES:-$STAGED_FILES_CMD}
 
+# Run php lint.
 echo "Checking PHP Lint..."
-for FILE in $SFILES
-do
-    php -l -d display_errors=0 $PROJECT/$FILE
-    if [ $? != 0 ]
-    then
-        echo "Fix the error before commit."
-        exit 1
-    fi
-    FILES="$FILES $PROJECT/$FILE"
+for FILE in $SFILES; do
+  php -l -d display_errors=0 $PROJECT/$FILE
+  if [ $? != 0 ]; then
+    echo "Fix the error before commit."
+    exit 1
+  fi
+  FILES="$FILES $PROJECT/$FILE"
 done
 
-if [ "$FILES" != "" ]
-then
-    echo "Running Code Sniffer."
-    ./vendor/bin/phpcs --ignore=$IGNORE --standard=./phpcs.ruleset.xml --encoding=utf-8 -n -p $FILES
-    if [ $? != 0 ]
-    then
-        echo "Fix the error before commit!"
-        echo "Run"
-        echo "  ./vendor/bin/phpcbf --ignore=$IGNORE --standard=./phpcs.ruleset.xml $FILES"
-        echo "for automatic fix or fix it manually."
-        exit 1
-    fi
+# Run phpcs.
+if [ "$FILES" != "" ]; then
+  echo "Running Code Sniffer."
+  ./vendor/bin/phpcs --standard=./phpcs.ruleset.xml --encoding=utf-8 -n -p $FILES
+  if [ $? != 0 ]; then
+    echo "Fix the error before commit!"
+    echo "Run"
+    echo "  ./vendor/bin/phpcbf --standard=./phpcs.ruleset.xml $FILES"
+    echo "for automatic fix or fix it manually."
+    exit 1
+  fi
 fi
 
 exit $?
