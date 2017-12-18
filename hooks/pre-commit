@@ -3,7 +3,7 @@
 PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
 
-if [ ! -f ./phpcs.xml ] && [ ! -f ./phpcs.xml ]; then
+if [ ! -f ./phpcs.xml ] && [ ! -f ./phpcs.xml.dist ]; then
   echo "./phpcs.xml or ./phpcs.xml.dist not found!"
   exit 1;
 fi
