@@ -32,6 +32,7 @@ composer run-script post-update-cmd
 
 ## Release history
 
+- 2017-12-18 - 1.0.4 - Auto detects `phpcs.xml` or `phpcs.xml.dist` by default. No longer accepts `phpcs.ruleset.xml`.
 - 2017-11-09 - 1.0.3 - Removed list of ignored directories.
 - 2017-09-27 - 1.0.2 - Uses `phpcs.ruleset.xml` instead of `dev.ruleset.xml`.
 - 2017-07-20 - 1.0.1 - Ignore 3rd party libraries and legacy code.
