@@ -3,8 +3,8 @@
 PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
 STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
 
-if [ ! -f ./phpcs.ruleset.xml ]; then
-  echo "./phpcs.ruleset.xml not found!"
+if [ ! -f ./phpcs.xml ] && [ ! -f ./phpcs.xml ]; then
+  echo "./phpcs.xml or ./phpcs.xml.dist not found!"
   exit 1;
 fi
 
@@ -32,11 +32,11 @@ done
 # Run phpcs.
 if [ "$FILES" != "" ]; then
   echo "Running Code Sniffer."
-  ./vendor/bin/phpcs --standard=./phpcs.ruleset.xml --encoding=utf-8 -n -p $FILES
+  ./vendor/bin/phpcs --encoding=utf-8 -n -p $FILES
   if [ $? != 0 ]; then
     echo "Fix the error before commit!"
     echo "Run"
-    echo "  ./vendor/bin/phpcbf --standard=./phpcs.ruleset.xml $FILES"
+    echo "  ./vendor/bin/phpcbf $FILES"
     echo "for automatic fix or fix it manually."
     exit 1
   fi
