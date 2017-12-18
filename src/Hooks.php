@@ -74,7 +74,7 @@ class Hooks
         $directory = self::getProjectDir($event);
 
         if (!file_exists($directory . '.git')) {
-            throw new Exception(sprintf('Opss! Local Git repository not found.'));
+            throw new Exception(sprintf('Oops! Local Git repository not found.'));
         }
 
         $io = $event->getIO();
