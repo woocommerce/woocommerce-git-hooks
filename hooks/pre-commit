@@ -32,7 +32,7 @@ done
 # Run phpcs.
 if [ "$FILES" != "" ]; then
   echo "Running Code Sniffer."
-  ./vendor/bin/phpcs --encoding=utf-8 -n -p $FILES
+  ./vendor/bin/phpcs --encoding=utf-8 -s -n -p $FILES
   if [ $? != 0 ]; then
     echo "Fix the error before commit!"
     echo "Run"
